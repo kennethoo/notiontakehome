@@ -3,6 +3,10 @@
 ## Overview
 This Node.js application is designed to import CSV data containing book ratings, process the data, and create a Notion database with book ratings and user preferences. It utilizes the Notion API for database creation and record insertion.
 
+## Demo 
+
+https://github.com/kennethoo/notiontakehome/assets/48225800/fcc328e5-0a50-4136-840e-92513ebd273f
+
 ## How It Works
 First we Initilzed a class called BookClubRating and pass our notion page Id . We then calls a methods called importCSVDataAndBuildDatabase that call the followings methodes
 
