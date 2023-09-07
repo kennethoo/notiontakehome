@@ -4,7 +4,7 @@ require("dotenv").config();
 // Import required packages
 const { Client } = require("@notionhq/client");
 const fs = require("fs");
-const capitalizeWord = require("./utills/capitalize");
+const capitalizeWords = require("./utills/capitalizeWords");
 const { parse } = require("csv-parse");
 
 // Initialize Notion client with authentication token
@@ -130,7 +130,7 @@ class BookClubRating {
         this.bookRating[formatedBookName];
       const favoritedCount = this.favoritesBookRating[formatedBookName] ?? 0;
       bookRatingData.push({
-        bookName: capitalizeWord(formattedBookName),
+        bookName: capitalizeWords(formattedBookName),
         averageRating,
         favoritedCount,
       });
@@ -180,7 +180,7 @@ class BookClubRating {
     const databaseRecords = await this.prepareDatabaseRecords();
     await this.createDataBase();
     await this.insertDatabaseRecords(databaseRecords);
-    console.log("CVS uploaded successfully to notion 🎉🎉.");
+    console.log("CVS successfully uploaded to notion 🎉🎉.");
   };
 }
 const bookClubRating = new BookClubRating(process.env.NOTION_PAGE_ID);
