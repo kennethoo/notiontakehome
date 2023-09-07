@@ -24,16 +24,13 @@ First we Initilzed a class called BookClubRating and pass our notion page Id . W
 
 
 ## How to Run
-1. **Prerequisites**:
    - install node.js
-     
-2. **Installation**:
-   - cd into the root dirrectory
+   - cd into the root directory
    - run node index.js
 
 ## Challenges and Problem Solving
 - **Was there anything you got stuck on, and if so what did you do to resolve it?**:
-  Something that I faced that was not a blocker but that was interesting was thinking about how I wanted to model this program, for example (function vs. class, error handling), and how deep and fancy I wanted to make this program. I then realized that it is important to focus on simplicity and correctness, and from there I designed it with those ideas in mind.
+  Something that I faced that was not a blocker but that was interesting was thinking about how I wanted to model this program, for example (function vs class, error handling etc), and how deep and fancy I wanted to make this program. I then realized that it is important to focus on simplicity and correctness, and from there I designed the program with those ideas in mind.
   
 - **Do you have any suggestions for improving the API documentation to make it clearer or easier to use?** :
   The documentation is really good, one thing I can think of is that when looking into the notion SDK it was not clear where to find a list of all methods that can be called by the node.js SDK in the readme or the getting stated. However, overall the documentation is easy to understand. 
@@ -48,4 +45,4 @@ First we Initilzed a class called BookClubRating and pass our notion page Id . W
 ## Dependencies
 - [Notion API Library](https://github.com/makenotion/notion-sdk-js): Used to interact with the Notion API for database creation and data entry.
 - [CSV Parser](https://www.npmjs.com/package/csv-parser): Used to parse CSV files and extract data.
-- [Prettier](https://www.npmjs.com/package/csv-parser): Used to format my code.
+- [Prettier](https://www.npmjs.com/package/prettier): Used to format my code.
