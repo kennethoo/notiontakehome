@@ -16,7 +16,7 @@ First we Initilzed a class called BookClubRating and pass our notion page Id . W
    
 - **prepareDatabaseRecords**:  responsible for constructing and formatting data in preparation for input into a database.
 
-- **createDataBase**: create a database in Notion.
+- **createDataBase**: create a database in Notion (If we don't have one yet)
 
 - **insertDatabaseRecords**: responsible for rendering or creating entries (rows) in a Notion database based on the data provided. 
 
