@@ -1,3 +1,7 @@
+
+
+
+
 # Book Club Rating 
 
 ## Overview
@@ -5,7 +9,7 @@ This Node.js application is designed to import CSV data containing book ratings,
 
 ## Demo 
 
-https://github.com/kennethoo/notiontakehome/assets/48225800/fcc328e5-0a50-4136-840e-92513ebd273f
+https://github.com/kennethoo/notiontakehome/assets/48225800/e1cfef30-9ad9-49cb-8ae0-b5e34cb702cf
 
 ## How It Works
 First we Initilzed a class called BookClubRating and pass our notion page Id . We then calls a methods called importCSVDataAndBuildDatabase that call the followings methodes
