@@ -1,29 +1,35 @@
+// Load environment variables from a .env file
 require("dotenv").config();
+
+// Import required packages
 const { Client } = require("@notionhq/client");
 const fs = require("fs");
 const capitalizeWord = require("./utills/capitalize");
 const { parse } = require("csv-parse");
+
+// Initialize Notion client with authentication token
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 });
 
-class BookRating {
-  constructor(NOTION_PAGE_ID) {
-    if (!NOTION_PAGE_ID) throw new Error("missing page id");
-    this.NOTION_PAGE_ID = NOTION_PAGE_ID;
+// Define a class for managing the Book Club Ratings
+class BookClubRating {
+  constructor(pageId) {
+    if (!pageId) throw new Error("missing page id");
+    this.pageId = pageId;
     this.favoritesBookRating = {};
     this.uniquesUserRating = {};
     this.bookRating = {};
     this.dataBaseId = null;
   }
+
   createDataBase = async () => {
-    const pageId = process.env.NOTION_PAGE_ID;
-    const title = "Book ratings";
+    const title = "Book Ratings";
     try {
       const newDb = await notion.databases.create({
         parent: {
           type: "page_id",
-          page_id: pageId,
+          page_id: this.pageId,
         },
         title: [
           {
@@ -50,6 +56,7 @@ class BookRating {
       console.log({ message: "error", error });
     }
   };
+
   getCVSData = async () => {
     return new Promise((resolve, reject) => {
       const data = [];
@@ -67,68 +74,68 @@ class BookRating {
     });
   };
 
-  orderFile = async () => {
+  processCSVAndCreateUniqueUserRatings = async () => {
     const cvsData = await this.getCVSData();
     for (let i = 0; i < cvsData.length; i++) {
       const [bookName, user, rating] = cvsData[i];
-      const formatBookName = bookName.toLowerCase().trim().split(" ").join("");
-      const formatUserName = user.toLowerCase().trim().split(" ").join("");
-      const uniqueKey = formatBookName + "#" + formatUserName;
-      this.uniquesUserRating[uniqueKey] = {
+      const formattedBookName = bookName.toLowerCase().trim();
+      const userNameFormatted = user.toLowerCase().trim();
+      const uniqueRecordKey = formattedBookName + "#" + userNameFormatted;
+      this.uniquesUserRating[uniqueRecordKey] = {
         rating: parseInt(rating),
-        bookName: bookName.trim(),
-        formatBookName,
+        formattedBookName,
       };
     }
   };
-  processRating = async () => {
-    for (const formatedBookName in this.uniquesUserRating) {
-      const { rating, bookName, formatBookName } =
-        this.uniquesUserRating[formatedBookName];
-      this.bookRating[formatBookName];
-      if (this.bookRating[formatBookName] !== undefined) {
-        const { numberOfUser, sumOfRating } = this.bookRating[formatBookName];
-        const newNumberOfRatingUser = numberOfUser + 1;
-        const newSumOfRating = sumOfRating + rating;
-        const newRating = newSumOfRating / newNumberOfRatingUser;
+  updateBookRatings = async () => {
+    for (const recordKey in this.uniquesUserRating) {
+      const { rating, formattedBookName } = this.uniquesUserRating[recordKey];
+      this.bookRating[formattedBookName];
+      if (this.bookRating[formattedBookName] !== undefined) {
+        const { userCount, totalRating } = this.bookRating[formattedBookName];
 
-        this.bookRating[formatBookName] = {
-          numberOfUser: newNumberOfRatingUser,
-          currentRating: newRating,
-          sumOfRating: newSumOfRating,
-          bookName,
+        const newUserCount = userCount + 1;
+        const newTotalRating = totalRating + rating;
+        const newRating = newTotalRating / newUserCount;
+
+        this.bookRating[formattedBookName] = {
+          userCount: newUserCount,
+          averageRating: newRating,
+          totalRating: newTotalRating,
+          formattedBookName,
         };
       } else {
-        this.bookRating[formatBookName] = {
-          numberOfUser: 1,
-          currentRating: rating,
-          sumOfRating: rating,
-          bookName,
+        this.bookRating[formattedBookName] = {
+          userCount: 1,
+          averageRating: rating,
+          totalRating: rating,
+          formattedBookName,
         };
       }
       if (rating == 5) {
-        this.favoritesBookRating[formatBookName] =
-          this.favoritesBookRating[formatBookName] + 1 || 1;
+        this.favoritesBookRating[formattedBookName] =
+          this.favoritesBookRating[formattedBookName] + 1 || 1;
       }
     }
   };
 
-  buildDatabaseData = () => {
-    const formatTedData = [];
+  prepareDatabaseRecords = () => {
+    const bookRatingData = [];
     for (const formatedBookName in this.bookRating) {
-      const { bookName, currentRating } = this.bookRating[formatedBookName];
-      const favoriteBookCount = this.favoritesBookRating[formatedBookName] ?? 0;
-      formatTedData.push({
-        bookName: capitalizeWord(bookName),
-        currentRating,
-        favoriteBookCount,
+      const { formattedBookName, averageRating } =
+        this.bookRating[formatedBookName];
+      const favoritedCount = this.favoritesBookRating[formatedBookName] ?? 0;
+      bookRatingData.push({
+        bookName: capitalizeWord(formattedBookName),
+        averageRating,
+        favoritedCount,
       });
     }
-    return formatTedData;
+    return bookRatingData;
   };
-  renderDataInDatabase = async (data) => {
-    for (let info of data) {
-      const { bookName, currentRating, favoriteBookCount } = info;
+  insertDatabaseRecords = async (databaseRecords) => {
+    for (const databaseRecord of databaseRecords) {
+      const { bookName, averageRating, favoritedCount } = databaseRecord;
       const properties = {
         "Book title": {
           title: [
@@ -140,34 +147,35 @@ class BookRating {
           ],
         },
         Ratings: {
-          number: parseInt(currentRating.toFixed(2)),
+          number: parseInt(averageRating.toFixed(2)),
         },
         Favorites: {
-          number: favoriteBookCount,
+          number: favoritedCount,
         },
       };
       this.createRow(properties);
     }
   };
-  createRow = async (newRowData) => {
+  createRow = async (properties) => {
     try {
       await notion.pages.create({
         parent: {
           database_id: this.dataBaseId,
         },
-        properties: newRowData,
+        properties: properties,
       });
     } catch (error) {
       console.error("Error creating row:", error.body);
     }
   };
-  proccesCSV = async () => {
-    await this.orderFile();
-    await this.processRating();
-    const data = await this.buildDatabaseData();
+
+  importCSVDataAndBuildDatabase = async () => {
+    await this.processCSVAndCreateUniqueUserRatings();
+    await this.updateBookRatings();
+    const databaseRecords = await this.prepareDatabaseRecords();
     await this.createDataBase();
-    await this.renderDataInDatabase(data);
+    await this.insertDatabaseRecords(databaseRecords);
   };
 }
-const bookRating = new BookRating(process.env.NOTION_PAGE_ID);
-bookRating.proccesCSV();
+const bookClubRating = new BookClubRating(process.env.NOTION_PAGE_ID);
+bookClubRating.importCSVDataAndBuildDatabase();

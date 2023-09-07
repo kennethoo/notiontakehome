@@ -1,10 +1,11 @@
 # Program Name Book Rating 
 
 ## Overview
- This progran collect and process some book rating data that we have in a CVS file and populate our notion database with it.
+This Node.js application is designed to import CSV data containing book ratings, process the data, and create a Notion database with book ratings and user preferences. It utilizes the Notion API for database creation and record insertion.
 
 ## How It Works
 First we create a class Initilzed a class called BookRating and pass our notion page Id . We then call a serrie of methods called processBookRating that calle muttiple otehr methode.
+
   - orderFile: The orderFile method reads data from a CSV file, processes each row, and organizes it into a data structure (this.uniquesUserRating) for further analysis. It does the following
     1 Retrieves CSV data using the getCVSData method.
 
