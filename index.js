@@ -24,6 +24,7 @@ class BookClubRating {
   }
 
   createDataBase = async () => {
+    console.log("Creating Notion DataBase...");
     const title = "Book Ratings";
     try {
       const newDb = await notion.databases.create({
@@ -75,6 +76,7 @@ class BookClubRating {
   };
 
   processCSVAndCreateUniqueUserRatings = async () => {
+    console.log("Processing CSV...");
     const cvsData = await this.getCVSData();
     for (let i = 0; i < cvsData.length; i++) {
       const [bookName, user, rating] = cvsData[i];
@@ -88,6 +90,7 @@ class BookClubRating {
     }
   };
   updateBookRatings = async () => {
+    console.log("Updating Book Ratings...");
     for (const recordKey in this.uniquesUserRating) {
       const { rating, formattedBookName } = this.uniquesUserRating[recordKey];
       this.bookRating[formattedBookName];
@@ -120,6 +123,7 @@ class BookClubRating {
   };
 
   prepareDatabaseRecords = () => {
+    console.log("preparing Database Record...");
     const bookRatingData = [];
     for (const formatedBookName in this.bookRating) {
       const { formattedBookName, averageRating } =
@@ -134,6 +138,7 @@ class BookClubRating {
     return bookRatingData;
   };
   insertDatabaseRecords = async (databaseRecords) => {
+    console.log("Inserting Database Record...");
     for (const databaseRecord of databaseRecords) {
       const { bookName, averageRating, favoritedCount } = databaseRecord;
       const properties = {
@@ -175,6 +180,7 @@ class BookClubRating {
     const databaseRecords = await this.prepareDatabaseRecords();
     await this.createDataBase();
     await this.insertDatabaseRecords(databaseRecords);
+    console.log("CVS uploaded successfully to notion 🎉🎉.");
   };
 }
 const bookClubRating = new BookClubRating(process.env.NOTION_PAGE_ID);
