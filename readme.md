@@ -20,7 +20,7 @@ First we Initilzed a class called BookClubRating and pass our notion page Id . W
 
 - **insertDatabaseRecords**: responsible for rendering or creating entries (rows) in a Notion database based on the data provided. 
 
-- **createRow**: responsible for creating a new row (entry) in a Notion database with the specified data.
+- **createUniqueRow**: responsible for creating unique a new row (entry) in a Notion database with the specified data.
 
 
 ## How to Run
