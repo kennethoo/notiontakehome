@@ -1,11 +1,20 @@
+const lowerWords = require("./lowerWords");
 function capitalizeWords(word) {
   const words = word.split(" ").filter((item) => item.length > 0);
   const formattedWords = [];
-  for (let i = 0; i < words.length; i++) {
-    const currentWord = words[i];
-    const capitalizeString =
-      currentWord[0].toUpperCase() + currentWord.slice(1);
-    formattedWords.push(capitalizeString);
+  if (words.length > 0) {
+    formattedWords.push(
+      words[0].charAt(0).toUpperCase() + words[0].slice(1).toLowerCase()
+    );
+  }
+  for (let i = 1; i < words.length; i++) {
+    if (!lowerWords.has(words[i].toLowerCase())) {
+      formattedWords.push(
+        words[i].charAt(0).toUpperCase() + words[i].slice(1).toLowerCase()
+      );
+    } else {
+      formattedWords.push(words[i]);
+    }
   }
   return formattedWords.join(" ");
 }

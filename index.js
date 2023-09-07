@@ -14,13 +14,13 @@ const notion = new Client({
 
 // Define a class for managing the Book Club Ratings
 class BookClubRating {
-  constructor(pageId) {
-    if (!pageId) throw new Error("missing page id");
-    this.pageId = pageId;
+  constructor({ notionPageID }) {
+    if (!notionPageID) throw new Error("missing page Id");
+    this.pageId = notionPageID;
     this.favoritesBookRating = {};
     this.uniquesUserRating = {};
     this.bookRating = {};
-    this.dataBaseId = null;
+    this.dataBaseId = "ced3aa38-0055-4045-ab43-fb1ab3641988";
   }
 
   createDataBase = async () => {
@@ -137,8 +137,22 @@ class BookClubRating {
     }
     return bookRatingData;
   };
+  getBookTitles = async () => {
+    try {
+      const { results } = await notion.databases.query({
+        database_id: this.dataBaseId,
+      });
+      return results.map((post) =>
+        post.properties["Book title"].title[0].plain_text.toLowerCase()
+      );
+    } catch (error) {
+      console.error("Error querying the database:", error.body);
+    }
+  };
   insertDatabaseRecords = async (databaseRecords) => {
     console.log("Inserting Database Record...");
+    const bookTitles = new Set(await this.getBookTitles());
+
     for (const databaseRecord of databaseRecords) {
       const { bookName, averageRating, favoritedCount } = databaseRecord;
       const properties = {
@@ -158,16 +172,17 @@ class BookClubRating {
           number: favoritedCount,
         },
       };
-      await this.createRow(properties);
+      await this.createUniqueRow(properties, bookTitles, bookName);
     }
   };
-  createRow = async (properties) => {
+  createUniqueRow = async (properties, bookTitles, bookName) => {
+    if (bookTitles.has(bookName.toLowerCase())) return;
     try {
       await notion.pages.create({
         parent: {
           database_id: this.dataBaseId,
         },
-        properties: properties,
+        properties,
       });
     } catch (error) {
       console.error("Error creating row:", error.body);
@@ -178,10 +193,13 @@ class BookClubRating {
     await this.processCSVAndCreateUniqueUserRatings();
     await this.updateBookRatings();
     const databaseRecords = await this.prepareDatabaseRecords();
-    await this.createDataBase();
+    //create a new database if we don't have a default one
+    if (!this.dataBaseId) await this.createDataBase();
     await this.insertDatabaseRecords(databaseRecords);
     console.log("CVS successfully uploaded to notion 🎉🎉.");
   };
 }
-const bookClubRating = new BookClubRating(process.env.NOTION_PAGE_ID);
+const bookClubRating = new BookClubRating({
+  notionPageID: process.env.NOTION_PAGE_ID,
+});
 bookClubRating.importCSVDataAndBuildDatabase();

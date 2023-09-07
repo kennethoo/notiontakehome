@@ -41,6 +41,8 @@ First we Initilzed a class called BookClubRating and pass our notion page Id . W
 ## Sources
 - [Digitalocean]([https://example.com/notion-api](https://www.digitalocean.com/community/tutorials/how-to-read-and-write-csv-files-in-node-js-using-node-csv)): Used to learn how to read cvs in node.js
 
+- [Stackoverflow]([https://stackoverflow.com/questions/68911829/getting-the-page-title-from-a-database-query-in-notion-api]): Use to learn how to query the a notion dataBase
+
 ## Dependencies
 - [Notion API Library](https://github.com/makenotion/notion-sdk-js): Used to interact with the Notion API for database creation and data entry.
 - [CSV Parser]([https://example.com/csv-parser](https://www.npmjs.com/package/csv-parser)): Used to parse CSV files and extract data.
