@@ -42,7 +42,7 @@ class BookClubRating {
         ],
         properties: {
           "Book title": { id: "fy:{", type: "title", title: {} },
-          Ratings: {
+          Rating: {
             type: "number",
             number: {},
           },
@@ -123,7 +123,7 @@ class BookClubRating {
   };
 
   prepareDatabaseRecords = () => {
-    console.log("preparing Database Record...");
+    console.log("Preparing Database Record...");
     const bookRatingData = [];
     for (const formatedBookName in this.bookRating) {
       const { formattedBookName, averageRating } =
@@ -151,7 +151,7 @@ class BookClubRating {
             },
           ],
         },
-        Ratings: {
+        Rating: {
           number: parseInt(averageRating.toFixed(2)),
         },
         Favorites: {
