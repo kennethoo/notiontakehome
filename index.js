@@ -80,6 +80,14 @@ class BookClubRating {
     const cvsData = await this.getCVSData();
     for (let i = 0; i < cvsData.length; i++) {
       const [bookName, user, rating] = cvsData[i];
+      /*
+        Edge cases to be aware is if:
+        - The Rating, Username or Book name is not the correct type.
+        - The Book name is the same as the UserName by mistake.
+        - The Username, Book name  or rating is empty.
+        - The Username does not have a last name.
+        - The Book name ,Username, or rating has white spaces inside and not only from left and right.
+       */
       const formattedBookName = bookName.toLowerCase().trim();
       const userNameFormatted = user.toLowerCase().trim();
       const uniqueRecordKey = formattedBookName + "#" + userNameFormatted;
