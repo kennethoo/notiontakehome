@@ -113,24 +113,16 @@ If any errors occur during the row creation process, it catches the error and lo
 4. **Usage**: If applicable, provide examples of how to use your program and the expected output.
 
 ## Challenges and Problem Solving
-- **Was there anything you got stuck on, and if so what did you do to resolve it?**: Describe any challenges you faced during development and how you overcame them.
-
-## API Documentation (if applicable)
-If your program interacts with an API, provide API documentation to make it clearer and easier to use. Include details such as endpoints, request parameters, and response formats.
+- **Was there anything you got stuck on, and if so what did you do to resolve it?**: something that I faced that was not a blocker but that was interesting was thinking about how I wanted to model this program, for example (function vs class, error handling), and how deep and fancy I wanted to make this program. I then realized that it is important to focus on simplicity and correctness, from there I then design it with those ideas in mind
+- **Do you have any suggestions for improving the API documentation to make it clearer or easier to use?** : Honetly the documentating is really good. Something i can think of this that when looking into the notion sdk it was not clear where to find a list of all methodes that can me called by the node.js sdk in the readme or in the getting stated . However overall the documentation is easy to understand 
 
 ## Sources
-List any major sources or references you relied on during the development of your program. This could include links to StackOverflow responses, documentation, or tutorials related to specific aspects of your code.
+List any major sources or references you relied on during the development of your program. This could include links to StackOverflow responses, documentation, or tutorials related to specific aspects of your code. 
+- [Digitalocean]([https://example.com/notion-api](https://www.digitalocean.com/community/tutorials/how-to-read-and-write-csv-files-in-node-js-using-node-csv)): Used to learn how to read cvs in node.js
 
 ## Dependencies
 List major open-source libraries or packages you used in your program, along with their purpose. For example:
-- [Notion API Library](https://example.com/notion-api): Used to interact with the Notion API for database creation and data entry.
-- [CSV Parser](https://example.com/csv-parser): Used to parse CSV files and extract data.
+- [Notion API Library](https://github.com/makenotion/notion-sdk-js): Used to interact with the Notion API for database creation and data entry.
+- [CSV Parser]([https://example.com/csv-parser](https://www.npmjs.com/package/csv-parser)): Used to parse CSV files and extract data.
+"
 
-## Contributing
-If your program is open source and you welcome contributions, provide guidelines for contributing, including how to report issues or submit pull requests.
-
-## License
-Specify the license under which your program is distributed. For example, "This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details."
-
-## Acknowledgments (Optional)
-Give credit to individuals, libraries, or resources that inspired or helped you during the development of your program.
