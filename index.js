@@ -93,7 +93,6 @@ class BookClubRating {
     console.log("Updating Book Ratings...");
     for (const recordKey in this.uniquesUserRating) {
       const { rating, formattedBookName } = this.uniquesUserRating[recordKey];
-      this.bookRating[formattedBookName];
       if (this.bookRating[formattedBookName] !== undefined) {
         const { userCount, totalRating } = this.bookRating[formattedBookName];
 
