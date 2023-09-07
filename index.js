@@ -158,7 +158,7 @@ class BookClubRating {
           number: favoritedCount,
         },
       };
-      this.createRow(properties);
+      await this.createRow(properties);
     }
   };
   createRow = async (properties) => {
