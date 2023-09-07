@@ -58,7 +58,7 @@ class BookClubRating {
     }
   };
 
-  getCVSData = async () => {
+  getCSVData = async () => {
     return new Promise((resolve, reject) => {
       const data = [];
       const csvFilePath = "./static/ratings.csv";
@@ -77,9 +77,9 @@ class BookClubRating {
 
   processCSVAndCreateUniqueUserRatings = async () => {
     console.log("Processing CSV...");
-    const cvsData = await this.getCVSData();
-    for (let i = 0; i < cvsData.length; i++) {
-      const [bookName, user, rating] = cvsData[i];
+    const CSVData = await this.getCSVData();
+    for (let i = 0; i < CSVData.length; i++) {
+      const [bookName, user, rating] = CSVData[i];
       /*
         Edge cases to be aware is if:
         - The Rating, Username or Book name is not the correct type.
@@ -208,7 +208,7 @@ class BookClubRating {
     //create a new database if we don't have a default one
     if (!this.dataBaseId) await this.createDataBase();
     await this.insertDatabaseRecords(databaseRecords);
-    console.log("CVS successfully uploaded to notion 🎉🎉.");
+    console.log("CSV successfully uploaded to notion 🎉🎉.");
   };
 }
 const bookClubRating = new BookClubRating({
