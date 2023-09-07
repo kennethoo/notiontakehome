@@ -39,12 +39,10 @@ First we Initilzed a class called BookClubRating and pass our notion page Id . W
   The documentation is really good, one thing I can think of is that when looking into the notion SDK it was not clear where to find a list of all methods that can be called by the node.js SDK in the readme or the getting stated. However, overall the documentation is easy to understand. 
 
 ## Sources
-- [Digitalocean]([https://example.com/notion-api](https://www.digitalocean.com/community/tutorials/how-to-read-and-write-csv-files-in-node-js-using-node-csv)): Used to learn how to read cvs in node.js
+- [Digitalocean](https://www.digitalocean.com/community/tutorials/how-to-read-and-write-csv-files-in-node-js-using-node-csv): Used to learn how to read cvs in node.js
 
-- [Stackoverflow]([https://stackoverflow.com/questions/68911829/getting-the-page-title-from-a-database-query-in-notion-api]): Use to learn how to query the a notion dataBase
+- [Stackoverflow](https://stackoverflow.com/questions/68911829/getting-the-page-title-from-a-database-query-in-notion-api): Use to learn how to query the a notion dataBase
 
 ## Dependencies
 - [Notion API Library](https://github.com/makenotion/notion-sdk-js): Used to interact with the Notion API for database creation and data entry.
-- [CSV Parser]([https://example.com/csv-parser](https://www.npmjs.com/package/csv-parser)): Used to parse CSV files and extract data.
-"
-
+- [CSV Parser](https://www.npmjs.com/package/csv-parser): Used to parse CSV files and extract data.
