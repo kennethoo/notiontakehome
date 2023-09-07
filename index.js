@@ -20,7 +20,7 @@ class BookClubRating {
     this.favoritesBookRating = {};
     this.uniquesUserRating = {};
     this.bookRating = {};
-    this.dataBaseId = "ced3aa38-0055-4045-ab43-fb1ab3641988";
+    this.dataBaseId = process.env.NOTION_DATABASE_ID;
   }
 
   createDataBase = async () => {
@@ -137,6 +137,7 @@ class BookClubRating {
     }
     return bookRatingData;
   };
+  // Get previous book from the database
   getBookTitles = async () => {
     try {
       const { results } = await notion.databases.query({
@@ -149,6 +150,8 @@ class BookClubRating {
       console.error("Error querying the database:", error.body);
     }
   };
+
+  //Insert book data into the database
   insertDatabaseRecords = async (databaseRecords) => {
     console.log("Inserting Database Record...");
     const bookTitles = new Set(await this.getBookTitles());
@@ -175,6 +178,8 @@ class BookClubRating {
       await this.createUniqueRow(properties, bookTitles, bookName);
     }
   };
+
+  //Create unique record for book rating
   createUniqueRow = async (properties, bookTitles, bookName) => {
     if (bookTitles.has(bookName.toLowerCase())) return;
     try {

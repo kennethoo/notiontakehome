@@ -48,3 +48,4 @@ First we Initilzed a class called BookClubRating and pass our notion page Id . W
 ## Dependencies
 - [Notion API Library](https://github.com/makenotion/notion-sdk-js): Used to interact with the Notion API for database creation and data entry.
 - [CSV Parser](https://www.npmjs.com/package/csv-parser): Used to parse CSV files and extract data.
+- [Prettier](https://www.npmjs.com/package/csv-parser): Used to format my code.
