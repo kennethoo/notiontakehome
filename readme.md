@@ -1,4 +1,4 @@
-# Program Name Book Rating Bot
+# Program Name Book Rating 
 
 ## Overview
  This progran collect and process some book rating data that we have in a CVS file and populate our notion database with it.
@@ -104,9 +104,9 @@ If any errors occur during the row creation process, it catches the error and lo
 
 
 ## How to Run
-1. **Prerequisites**: List any prerequisites or dependencies that need to be installed or set up before running your program.
+1. **Prerequisites**: node.js install 
 
-2. **Installation**: Explain how to install or set up your program, including any configuration steps if necessary.
+2. **Installation**: cd into the root dirrectory and run node index
 
 3. **Running the Program**: Provide clear instructions on how to run your program. Include any command-line commands or specific steps users should follow.
 
